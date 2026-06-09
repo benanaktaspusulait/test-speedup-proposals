@@ -17,7 +17,7 @@ This page gives the decision view: value, risk, complexity, effort, and MoSCoW r
 | -------- | ----------- | ----- | ---- | ---------- | ------ | ------ | ----- |
 | Baseline timing/report output | Capture timings, scenario count, feature timing, and reports before changes | High | Low | Low | Low | Must | Needed before any decision |
 | Reduce test logging | Lower noisy green-run logs with debug override | High | Low | Low | Low | Must | Quick win |
-| E2E poll duration fix | Correct milliseconds/seconds polling mistakes | Medium | Low | Low | Low | Must | Avoids accidental long waits |
+| E2E poll duration fix | Correct milliseconds/seconds polling configuration mistakes that can create avoidable waits | Medium | Low | Low | Low | Must | Avoids accidental long waits |
 | Multiple runners + Surefire forks | Split large Cucumber runner into runner groups and run JVM forks | High | Medium | Medium | Medium | Should | Main near-term speed-up model; confirm as Must after service baseline validates suitability |
 | JVM tuning for forks | Add short-lived JVM flags for forked tests | Medium | Low | Low | Low | Should | Use with forked tests |
 | Config injection/caching | Avoid repeated per-scenario config reads | Medium | Low | Low | Low | Should | Apply only where repeated reads exist |
@@ -30,7 +30,7 @@ This page gives the decision view: value, risk, complexity, effort, and MoSCoW r
 
 ## Reading the Matrix
 
-- **Must** items are the initial focus.
+- **Must** items are the initial focus. Must does not mean every change should be applied blindly — it means the item should be assessed first and applied where the baseline confirms it is relevant.
 - **Should** items are low-risk improvements that compound with the main approach.
 - **Could** items need service-specific evidence or technical review.
 - Exact impact is `TBC` per service baseline unless listed in the References and Evidence child page.

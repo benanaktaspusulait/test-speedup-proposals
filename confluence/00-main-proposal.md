@@ -113,7 +113,7 @@ Apply the work in phases:
 
 1. Measure the current baseline.
 2. Apply low-risk quick wins.
-3. Choose one topology-test parallelisation model per service.
+3. Choose one test parallelisation model per service, especially for topology / Cucumber-style test suites.
 4. Harden the test structure if deeper parallelism is needed.
 
 The main execution-model options are:

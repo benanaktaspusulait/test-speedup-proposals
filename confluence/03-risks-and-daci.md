@@ -32,10 +32,10 @@ Some changes may need separate DACI-style decision records before implementation
 
 | Decision Area | Why It May Need DACI | Participants | Status |
 | ------------- | -------------------- | ------------ | ------ |
-| Surefire / Failsafe config | Affects CI and local execution | service, platform, tech lead | TBC |
-| Runner split model | Affects ownership and reporting | service, QA, tech lead | TBC |
-| JUnit 5 migration | Dependency and thread-safety change | engineers, architects, QA | TBC |
-| E2E harness changes | Reliability-sensitive defaults | service, QA, delivery | TBC |
-| CI matrix/sharding | Platform and reporting impact | service, platform, delivery | TBC |
-| Docker/cache work | Separate larger pipeline stream | platform, architects | Separate / TBC |
+| Surefire / Failsafe config | Affects CI and local execution | Service Team, Platform/CI Team, Tech Lead | TBC |
+| Runner split model | Affects ownership and reporting | Service Team, QA, Tech Lead | TBC |
+| JUnit 5 migration | Dependency and thread-safety change | Engineering, Architecture, QA | TBC |
+| E2E harness changes | Reliability-sensitive defaults | Service Team, QA, Delivery | TBC |
+| CI matrix/sharding | Platform and reporting impact | Service Team, Platform/CI Team, Delivery | TBC |
+| Docker/cache work | Separate larger pipeline stream | Platform/CI Team, Architecture | Separate / TBC |
 
