@@ -124,7 +124,7 @@ The main execution-model options are:
 | CI matrix by runner group | When diagnostics, ownership, or retry behaviour matter |
 | JUnit 5 scenario parallelism | Future option after thread-safety work |
 
-Do not enable multiple topology-test parallelisation models at the same time.
+Do not enable multiple test parallelisation models for the same suite at the same time.
 
 ---
 
