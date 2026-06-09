@@ -94,6 +94,21 @@ Example measured baseline evidence is listed in the References and Evidence chil
 
 ## 6. Approach
 
+### What We Are Proposing
+
+We are not proposing a single global change for every service.
+
+The proposal is to use a repeatable assessment and improvement approach:
+
+1. Capture the current test/pipeline baseline.
+2. Apply safe quick wins first (log reduction, polling fixes).
+3. Use runner split + Surefire forks as the main near-term speed-up option where the service structure supports it.
+4. Keep JUnit 5 scenario-level parallelism and E2E sharding as later options only after thread-safety and isolation risks are addressed.
+
+The first practical solution to validate is multiple runners + Surefire forks, supported by baseline measurement and rollback guardrails.
+
+### How It Works
+
 Apply the work in phases:
 
 1. Measure the current baseline.
@@ -113,7 +128,21 @@ Do not enable multiple topology-test parallelisation models at the same time.
 
 ---
 
-## 7. Success Summary
+## 7. Example Evidence
+
+One reviewed service showed:
+
+- 66 feature files, 343 scenarios
+- 1 Cucumber runner, 1 JVM fork, sequential execution
+- Full CI stage ~13m25s
+- Maven build step ~1m17s (topology tests ~18s within this)
+- E2E integration step ~9m34s
+
+This evidence is an example only. Each service must capture its own baseline before applying the approach.
+
+---
+
+## 8. Success Summary
 
 Success means shorter feedback loops without reducing test confidence:
 

@@ -34,7 +34,7 @@
 
 ## Phase 2: Medium-Complexity Improvements
 
-**Objective:** introduce the main near-term parallelisation model while keeping rollback simple.
+**Objective:** introduce the main near-term parallelisation model while keeping rollback simple. This is the first phase where measurable speed-up is expected, mainly through runner split and Surefire forks where suitable.
 
 **Expected outcome:** topology/unit-style tests improve where the suite can be split into balanced runner groups; E2E green runs spend less time in avoidable harness overhead.
 
