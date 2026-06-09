@@ -3,6 +3,16 @@
 > Child page of [CI/CD and Test Pipeline Speed-Up Approach](./00-main-proposal.md).
 > Repository-specific details here are evidence only, not the general solution.
 
+| Metadata | Value |
+|----------|-------|
+| Owner | TBC |
+| Status | Draft |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Last reviewed | 2026-06-09 |
+| Source | `test-speedup-proposals` migration |
+| Labels | `proposal`, `ci-cd`, `test-pipeline` |
+
 ---
 
 ## Source Documents
@@ -18,6 +28,8 @@
 | `07-proposal-e2e-runtime.md` | E2E harness improvements |
 
 TODO: replace local paths with Confluence/Git links when publishing location is confirmed.
+
+Local paths are intentionally kept as inline code until the publishing location and GitLab access model are confirmed. Do not create guessed links.
 
 ---
 
@@ -76,3 +88,5 @@ The source material treats these as separate workstreams:
 - service lifecycle changes
 - broker/database startup optimisation
 - security scanning duration
+
+Feedback or questions? Comment on the Confluence page or contact the page owner once assigned.

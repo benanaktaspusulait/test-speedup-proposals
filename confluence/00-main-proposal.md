@@ -1,5 +1,15 @@
 # CI/CD and Test Pipeline Speed-Up Approach
 
+| Metadata | Value |
+|----------|-------|
+| Owner | TBC |
+| Status | Draft |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Last reviewed | 2026-06-09 |
+| Source | `test-speedup-proposals` migration |
+| Labels | `proposal`, `ci-cd`, `test-pipeline` |
+
 ## 1. Executive Summary
 
 This proposal defines a reusable approach to reduce CI/CD feedback time for Java/Maven services with Cucumber-based tests.
@@ -99,3 +109,5 @@ Success means shorter feedback loops without reducing test confidence:
 - materially shorter test duration where the service shape supports it
 - clear rollback path for each phase
 - reusable pattern for future services
+
+Feedback or questions? Comment on the Confluence page or contact the page owner once assigned.

@@ -2,6 +2,16 @@
 
 > Child page of [CI/CD and Test Pipeline Speed-Up Approach](./00-main-proposal.md).
 
+| Metadata | Value |
+|----------|-------|
+| Owner | TBC |
+| Status | Draft |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Last reviewed | 2026-06-09 |
+| Source | `test-speedup-proposals` migration |
+| Labels | `proposal`, `ci-cd`, `test-pipeline` |
+
 This page gives the decision view: value, risk, complexity, effort, and MoSCoW rating.
 
 | Proposal | Description | Value | Risk | Complexity | Effort | MoSCoW | Notes |
@@ -25,3 +35,5 @@ This page gives the decision view: value, risk, complexity, effort, and MoSCoW r
 - **Should** items are low-risk improvements that compound with the main approach.
 - **Could** items need service-specific evidence or technical review.
 - Exact impact is `TBC` per service baseline unless listed in [References and Evidence](./05-references.md).
+
+Feedback or questions? Comment on the Confluence page or contact the page owner once assigned.

@@ -3,6 +3,16 @@
 > Child page of [CI/CD and Test Pipeline Speed-Up Approach](./00-main-proposal.md).
 > Keep this page as implementation notes only.
 
+| Metadata | Value |
+|----------|-------|
+| Owner | TBC |
+| Status | Draft |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Last reviewed | 2026-06-09 |
+| Source | `test-speedup-proposals` migration |
+| Labels | `technical-reference`, `ci-cd`, `test-pipeline` |
+
 ---
 
 ## 1. Baseline Checklist
@@ -150,7 +160,15 @@ Without isolation, keep E2E tests sequential and focus on polling/logging/readin
 
 ---
 
-## 7. Applicability Checklist
+## 7. Sensitive Data Guardrail
+
+- Do not copy secrets, tokens, credentials, `.env` values, or restricted internal URLs into Confluence.
+- Use placeholders such as `${SECRET_NAME}` or `<redacted>` if a value must be described.
+- Reference sensitive files by path only; do not reproduce their contents.
+
+---
+
+## 8. Applicability Checklist
 
 | Criterion | Yes/No |
 |-----------|--------|
@@ -162,3 +180,5 @@ Without isolation, keep E2E tests sequential and focus on polling/logging/readin
 | Verbose green-run logs | TBC |
 | Hardcoded E2E polling waits | TBC |
 | CI worker has CPU/memory headroom | TBC |
+
+Feedback or questions? Comment on the Confluence page or contact the page owner once assigned.

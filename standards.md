@@ -62,6 +62,13 @@ Use this standard when updating or restructuring existing pages to:
 
 Use this standard when converting existing GitLab repository documentation to Confluence. This applies to the remaining repositories that still hold proposals or technical documentation in Markdown. Once those migrations are complete, this workflow becomes dormant but the guidance remains available for reference.
 
+**Current migration backlog:**
+
+- `test-speedup-proposals` — CI/CD and test pipeline speed-up proposals (in progress)
+- TBC — additional repositories to be confirmed
+
+Once all repositories in this list are migrated, Section 8.3 becomes reference-only and should be marked as complete.
+
 ---
 
 ## 4. Key Principles
@@ -147,7 +154,7 @@ This makes the document feel more structured and actionable while still allowing
 
 ### 4.5 Do Not Invent Missing Information
 
-When converting from GitLab to Confluence, do not guess missing details.
+When creating or updating Confluence pages, do not guess missing details.
 
 Use:
 
@@ -165,6 +172,8 @@ Examples:
 * Effort: TBC
 * Risk: TBC
 * Success metric: TBC
+
+**TBC resolution rule:** All TBC items must be resolved before a page moves to "Approved" status. Pages in "Draft" or "In Review" may contain TBC items, but reviewers should flag them for resolution. A page should not remain in "In Review" indefinitely with unresolved TBCs — set a deadline or assign an owner to each TBC.
 
 ---
 
@@ -528,12 +537,12 @@ Use a parent page with focused child pages. This keeps the overview easy for sta
 Suggested structure:
 
 ```text
-00-overview.md
-01-proposal-overview-matrix.md
-02-phased-plan.md
-03-risks-and-daci.md
-04-technical-details.md
-05-references.md
+Parent page: Overview and Approach
+  ├── Child: Proposal Overview Matrix
+  ├── Child: Phased Plan
+  ├── Child: Risks and DACI
+  ├── Child: Technical Details
+  └── Child: References
 ```
 
 ### 6.1 Parent Page
@@ -608,12 +617,18 @@ These may not work in Confluence because Confluence does not understand the GitL
 
 ### 7.2 Absolute GitLab Links
 
-Important links should be converted to absolute GitLab links where possible.
+Important links should be converted to absolute GitLab links where possible, provided the GitLab instance is accessible to the intended Confluence audience.
+
+Guidelines:
+
+- If the GitLab instance is internal but accessible to all Confluence readers (e.g. organisation-wide GitLab), absolute links are safe to include.
+- If the GitLab instance requires specific access permissions that not all readers have, add a note: "(requires GitLab access)".
+- If the URL is classified as restricted (e.g. points to a security-sensitive internal system), do not include it — use inline code with the file path instead.
 
 Examples:
 
 ```text
-GitLab MR: <absolute MR link>
+GitLab MR: <absolute MR link> (requires GitLab access)
 Pipeline example: <absolute pipeline link>
 Relevant file: <absolute file link>
 ```
@@ -839,12 +854,9 @@ Suggested structure:
 ## Context
 ## Problem
 ## Options Considered
-## Recommendation / Approach
+## Proposed Approach
 ## Decision Needed
-## Driver
-## Approver
-## Contributors
-## Informed
+## DACI Roles
 ## Risks
 ## Impact
 ## Decision Outcome
@@ -852,7 +864,16 @@ Suggested structure:
 ## References
 ```
 
-Note: In DACI pages, “Recommendation” may be acceptable when comparing options, but the final chosen direction should be described as the “Approach”.
+### DACI Roles
+
+| Role | Definition |
+|------|-----------|
+| Driver | The person responsible for driving the decision to completion. Gathers input, facilitates discussion, and ensures a decision is made on time. Does not make the final call. |
+| Approver | The person (or people) with authority to make the final decision. Accountable for the outcome. |
+| Contributors | People whose input and expertise are sought. They provide options, analysis, and advice but do not have decision authority. |
+| Informed | People who need to know the outcome but are not involved in making the decision. Notified after the decision is made. |
+
+Note: In DACI pages, when comparing options before a decision is made, use "Proposed Approach" or "Preferred Option". Avoid "Recommendation" to stay consistent with the tone guidance in Section 4.4. Once a decision is finalised, the chosen direction should be described as the "Decision Outcome".
 
 ---
 
@@ -1035,6 +1056,10 @@ Before publishing or sharing a Confluence page, check:
 [ ] Are references listed clearly?
 [ ] Is the page readable by non-technical stakeholders?
 [ ] Is the tone structured and professional?
+[ ] Are there any secrets, tokens, credentials, or PII accidentally included?
+[ ] Is metadata present (owner, status, last updated)?
+[ ] Are standard labels applied?
+[ ] Are all TBC items acceptable for the current page status?
 ```
 
 ---
@@ -1084,7 +1109,7 @@ Options:
 |----------|-------------|
 | Keep as code block | Simple flow diagrams that are short and still readable |
 | Convert to Confluence draw.io diagram | Complex architecture or flow diagrams that need to be maintained |
-| Convert to Mermaid (if Confluence plugin available) | Sequence diagrams, flowcharts, or state diagrams |
+| Convert to Mermaid (if Confluence plugin available) | Sequence diagrams, flowcharts, or state diagrams. Requires a Mermaid plugin (e.g. "Mermaid Diagrams for Confluence" or equivalent). Check with your Confluence admin whether the plugin is installed. |
 | Screenshot from rendered Markdown | Quick conversion where the diagram is stable and unlikely to change |
 
 ### 14.2 Images and Screenshots
@@ -1116,6 +1141,8 @@ Use Confluence macros to improve readability:
 | Info / Note / Warning panels | Calling out important context, caveats, or prerequisites |
 | Children Display | Parent pages that link to child pages |
 | Jira Issue macro | Linking proposals to Epics or Stories |
+
+When a proposal has been converted into Jira work items (Epics, Stories, Tasks), use the Jira Issue macro to link directly from the Confluence page. This creates a live connection between the proposal and its delivery tracking.
 
 ### 15.2 Status Labels
 
@@ -1163,6 +1190,8 @@ Apply consistent Confluence labels to help with search and filtering:
 - Apply at least 2 labels per page (type + topic).
 - Do not create labels that duplicate existing ones (check before creating).
 - Review labels when page status changes.
+- Labels are applied at the page level. They do not inherit from parent pages or spaces.
+- To find all pages with a specific label, use Confluence's label search or the "Content by Label" macro.
 
 ---
 
@@ -1188,6 +1217,15 @@ Status: Draft / In Review / Approved / In Progress / Done / Parked
 Source: <GitLab repository link or "original content">
 ```
 
+**Owner format:** Use one of the following consistent formats:
+
+- Individual: `FirstName LastName (@slack-handle)` or `FirstName LastName (team-name)`
+- Team: `Team-Name`
+
+Confluence also supports `@mentions` — use the Confluence user mention where possible so that ownership is clickable and verifiable.
+
+**Note:** Confluence displays its own "Last modified" timestamp automatically. The manual "Last reviewed" field is still useful because a page can be modified without being meaningfully reviewed.
+
 ### 17.3 Review Cadence
 
 - Proposal pages: review status monthly until implemented or parked.
@@ -1201,7 +1239,10 @@ When a page is no longer relevant:
 
 - Move it to an "Archive" space or parent page.
 - Add a clear banner: "This page is archived and may no longer be accurate."
-- Do not delete pages — they may still have historical value.
+- Do not delete pages — they may still have historical value or be linked from other pages.
+- If other pages link to the archived page, those links will continue to work (Confluence preserves links on move). No redirect is needed.
+- Add a `deprecated` or `archived` label to the page for filtering.
+- Pages should never be deleted. If content is outdated, archive it; if it is wrong, correct it.
 
 ---
 
@@ -1209,7 +1250,7 @@ When a page is no longer relevant:
 
 ### 18.1 Default Access
 
-Confluence pages created from GitLab repositories should generally be accessible to:
+Confluence pages following this standard should generally be accessible to:
 
 - The owning team.
 - Related engineering teams.
@@ -1230,11 +1271,45 @@ Then restrict access to the relevant group and add a note explaining why access 
 
 Do not share Confluence pages externally (outside the organisation) without explicit approval. This applies even if the source GitLab content is in a public or shared repository.
 
+Approval must be obtained from both:
+
+- The page owner (or team lead if owner is unavailable).
+- The security team or information governance lead.
+
+Document the approval in the page comments or link to the relevant approval thread.
+
 ---
 
-## 19. Future Improvements
+## 19. General Policies
 
-This standard can evolve as more repositories are converted.
+### 19.1 Documentation Language
+
+All Confluence documentation covered by this standard should be written in English. This ensures consistency across teams and readability for all stakeholders including architecture, delivery, and platform teams.
+
+### 19.2 Feedback Mechanism
+
+Each page should include a way for readers to provide feedback. Options:
+
+- Add a line at the bottom of the page: "Feedback or questions? Contact the page owner or comment below."
+- Use Confluence's built-in page comments for inline feedback.
+- For broader feedback, link to a relevant Slack channel or Teams thread.
+
+### 19.3 Accessibility and Readability
+
+- Avoid relying solely on colour to convey meaning (e.g. in status indicators).
+- Keep table column widths reasonable — very wide tables with many columns may require horizontal scrolling on smaller screens or mobile devices.
+- Use headings consistently to support screen readers and Confluence's Table of Contents macro.
+- Prefer text over images of text.
+
+### 19.4 Page Deletion Policy
+
+Pages should never be permanently deleted. If content is outdated, archive it (see Section 17.4). If content is incorrect, correct it and note the change. Confluence version history preserves all edits, but deleted pages cannot be easily recovered.
+
+---
+
+## 20. Future Improvements
+
+This standard can evolve over time.
 
 Potential future improvements:
 
@@ -1254,7 +1329,7 @@ Potential future improvements:
 
 ---
 
-## 20. Summary
+## 21. Summary
 
 This standard provides a consistent way to create, update, and structure Confluence documentation for technical proposals, decision records, KT material, and implementation guides.
 

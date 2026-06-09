@@ -2,6 +2,16 @@
 
 > Child page of [CI/CD and Test Pipeline Speed-Up Approach](./00-main-proposal.md).
 
+| Metadata | Value |
+|----------|-------|
+| Owner | TBC |
+| Status | Draft |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Last reviewed | 2026-06-09 |
+| Source | `test-speedup-proposals` migration |
+| Labels | `proposal`, `ci-cd`, `test-pipeline`, `daci` |
+
 ## Risks and Mitigations
 
 | Risk | Impact | Mitigation | Owner |
@@ -29,3 +39,5 @@ Some changes may need separate DACI-style decision records before implementation
 | E2E harness changes | Reliability-sensitive defaults | service, QA, delivery | TBC |
 | CI matrix/sharding | Platform and reporting impact | service, platform, delivery | TBC |
 | Docker/cache work | Separate larger pipeline stream | platform, architects | Separate / TBC |
+
+Feedback or questions? Comment on the Confluence page or contact the page owner once assigned.

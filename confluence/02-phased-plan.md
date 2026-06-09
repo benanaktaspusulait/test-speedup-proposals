@@ -2,6 +2,16 @@
 
 > Child page of [CI/CD and Test Pipeline Speed-Up Approach](./00-main-proposal.md).
 
+| Metadata | Value |
+|----------|-------|
+| Owner | TBC |
+| Status | Draft |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Last reviewed | 2026-06-09 |
+| Source | `test-speedup-proposals` migration |
+| Labels | `proposal`, `ci-cd`, `test-pipeline` |
+
 ## Phase Summary
 
 | Phase | Purpose | Candidate Changes | Exit Criteria |
@@ -50,3 +60,5 @@
 **Expected outcome:** higher parallelism may be possible after thread-safety work; E2E sharding may help only with safe isolation.
 
 **Risks / dependencies:** JUnit 5 can expose hidden shared state; E2E sharding is unsafe without isolated topics, consumer groups, data, or infrastructure.
+
+Feedback or questions? Comment on the Confluence page or contact the page owner once assigned.
