@@ -3,11 +3,12 @@
 | Metadata | Value |
 |----------|-------|
 | Owner | TBC |
+| Initial contributor | Benan Aktas |
+| Reviewers | Service team, Platform/CI team, QA, Delivery/ETO representatives |
 | Status | Draft |
 | Created | 2026-06-09 |
 | Last updated | 2026-06-09 |
 | Last reviewed | 2026-06-09 |
-| Source | `test-speedup-proposals` migration |
 | Labels | `proposal`, `ci-cd`, `test-pipeline` |
 
 ## 1. Executive Summary
@@ -20,15 +21,28 @@ This page is the short stakeholder summary. Detailed tables and implementation n
 
 ---
 
+## Decision / Review Needed
+
+This proposal is shared for review and alignment. The requested feedback is:
+
+- Confirm whether this structure is suitable for wider reuse across services.
+- Confirm which quick-win items should be prioritised first.
+- Identify any proposals that need a separate DACI review before implementation.
+- Agree the right owner or team for the next step.
+
+---
+
 ## 2. Page Structure
 
 | Page | Purpose |
 |------|---------|
-| [Proposal Overview Matrix](./01-proposal-overview-matrix.md) | Value, risk, complexity, effort, and MoSCoW view |
-| [Phased Plan](./02-phased-plan.md) | What happens in each phase and why |
-| [Risks and DACI](./03-risks-and-daci.md) | Main risks, mitigations, and decision areas |
-| [Technical Details](./04-technical-details.md) | Commands, config examples, and implementation guardrails |
-| [References and Evidence](./05-references.md) | Source documents, external docs, and example baseline |
+| Proposal Overview Matrix | Value, risk, complexity, effort, and MoSCoW view |
+| Phased Plan | What happens in each phase and why |
+| Risks and DACI | Main risks, mitigations, and decision areas |
+| Technical Details | Commands, config examples, and implementation guardrails |
+| References and Evidence | Source documents, external docs, and example baseline |
+
+> TODO: replace page names above with Confluence child page links after publishing.
 
 ---
 
@@ -40,7 +54,7 @@ This page is the short stakeholder summary. Detailed tables and implementation n
 - E2E tests may spend avoidable time polling, waiting, or repeating readiness checks.
 - Teams need a common approach rather than service-by-service reinvention.
 
-Example measured baseline evidence is listed in [References and Evidence](./05-references.md). Each service must still capture its own baseline before adopting changes.
+Example measured baseline evidence is listed in the References and Evidence child page. Each service must capture its own baseline before adopting changes.
 
 ---
 
@@ -106,8 +120,10 @@ Success means shorter feedback loops without reducing test confidence:
 - same scenario count
 - same CI coverage gate
 - no increase in flaky failures
-- materially shorter test duration where the service shape supports it
+- measurable reduction in test duration (target confirmed per service after baseline capture)
 - clear rollback path for each phase
 - reusable pattern for future services
+
+This approach is reusable, but implementation must be validated per service.
 
 Feedback or questions? Comment on the Confluence page or contact the page owner once assigned.

@@ -1,6 +1,6 @@
 # Technical Details
 
-> Child page of [CI/CD and Test Pipeline Speed-Up Approach](./00-main-proposal.md).
+> Child page of CI/CD and Test Pipeline Speed-Up Approach.
 > Keep this page as implementation notes only.
 
 | Metadata | Value |
@@ -10,8 +10,9 @@
 | Created | 2026-06-09 |
 | Last updated | 2026-06-09 |
 | Last reviewed | 2026-06-09 |
-| Source | `test-speedup-proposals` migration |
 | Labels | `technical-reference`, `ci-cd`, `test-pipeline` |
+
+> **Implementation Note:** These examples are patterns and reference configurations, not drop-in solutions. Each service must confirm its own baseline, runner structure, CI capacity, and test isolation before applying changes. Do not copy configurations blindly — validate suitability per service.
 
 ---
 
@@ -181,4 +182,3 @@ Without isolation, keep E2E tests sequential and focus on polling/logging/readin
 | Hardcoded E2E polling waits | TBC |
 | CI worker has CPU/memory headroom | TBC |
 
-Feedback or questions? Comment on the Confluence page or contact the page owner once assigned.

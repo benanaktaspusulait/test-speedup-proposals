@@ -1,6 +1,6 @@
 # References and Evidence
 
-> Child page of [CI/CD and Test Pipeline Speed-Up Approach](./00-main-proposal.md).
+> Child page of CI/CD and Test Pipeline Speed-Up Approach.
 > Repository-specific details here are evidence only, not the general solution.
 
 | Metadata | Value |
@@ -10,26 +10,7 @@
 | Created | 2026-06-09 |
 | Last updated | 2026-06-09 |
 | Last reviewed | 2026-06-09 |
-| Source | `test-speedup-proposals` migration |
 | Labels | `proposal`, `ci-cd`, `test-pipeline` |
-
----
-
-## Source Documents
-
-| Document | Purpose |
-|----------|---------|
-| `01-current-state.md` | current-state analysis |
-| `02-proposal-maven-parallel-build.md` | Maven `-T` proposal |
-| `03-proposal-multiple-runners-fork.md` | runner split + Surefire forks |
-| `04-proposal-junit5-parallel-engine.md` | JUnit 5 migration path |
-| `05-proposal-quick-wins.md` | logging, caching, JaCoCo, JVM tuning |
-| `06-proposal-ci-matrix-sharding.md` | CI matrix option |
-| `07-proposal-e2e-runtime.md` | E2E harness improvements |
-
-TODO: replace local paths with Confluence/Git links when publishing location is confirmed.
-
-Local paths are intentionally kept as inline code until the publishing location and GitLab access model are confirmed. Do not create guessed links.
 
 ---
 
@@ -89,4 +70,3 @@ The source material treats these as separate workstreams:
 - broker/database startup optimisation
 - security scanning duration
 
-Feedback or questions? Comment on the Confluence page or contact the page owner once assigned.
