@@ -12,6 +12,8 @@
 
 These are independent, low-risk optimizations that reduce per-scenario and per-build overhead. They are orthogonal to parallelization — they make each scenario cheaper, which compounds with the parallel proposals (1, 2, 3).
 
+This proposal also includes one maintainability quick win for feature-file assertions. It is not a runtime optimization by itself, but it reduces the cost of future dependency/model changes and prevents large mechanical edits across the Cucumber feature set.
+
 ---
 
 ## 4.1 Reduce Test Logging Verbosity (Highest Impact Quick Win)
@@ -251,6 +253,108 @@ The `@{argLine}` placeholder is populated by JaCoCo's `prepare-agent` goal. The 
 
 ---
 
+## 4.6 Decouple Feature Assertions from Test-Common Field Names
+
+### Problem
+
+The feature files currently expose low-level assertion keys directly:
+
+```gherkin
+| metadata.identityRecord.poleId.v2.id | SNSENS:S={movementReferenceNumber} |
+```
+
+After updating to the compatible test-common/model dependency set, the assertion layer expects the identity POLE v2 id expected value under the prefixed key:
+
+```gherkin
+| Data metadata.identityRecord.poleId.v2.id | SNSENS:S={movementReferenceNumber} |
+```
+
+This `Data ` prefix is an assertion key namespace. It does **not** change the produced POLE record, the mapping logic, or the expected `SNSENS:*` identity value. It only changes how the Cucumber data table is converted into the `Map<String, String>` consumed by the assertion helper.
+
+The failure mode is confusing because the actual output is correct-looking:
+
+```text
+expected: <Data metadata.identityRecord.poleId.v2.id>
+but was: <SNSENS:S=...>
+```
+
+The underlying problem is not the generated identity id. The problem is that the feature table key no longer matches the key expected by the assertion helper, so the expected value lookup falls through to the wrong token/key.
+
+### Immediate Compatibility Fix
+
+Update the feature assertion rows from the old key to the new key:
+
+```diff
+- | metadata.identityRecord.poleId.v2.id      | SNSENS:S={movementReferenceNumber} |
++ | Data metadata.identityRecord.poleId.v2.id | SNSENS:S={movementReferenceNumber} |
+```
+
+Current scope:
+
+| Change | Count |
+|--------|-------|
+| Feature files touched | 66 |
+| Assertion rows updated | 141 |
+| Java/POM changes required | 0 |
+| Runtime behavior change | 0 |
+
+This is the safest compatibility fix when the POM/dependency upgrade has already been proven elsewhere and only the feature files need to match the final test-common model.
+
+### Better Long-Term Shape
+
+Feature files should not need to know raw Avro/test-common assertion paths such as `Data metadata.identityRecord.poleId.v2.id`. They should use a stable domain-level test DSL:
+
+```gherkin
+| identityPoleV2Id | SNSENS:S={movementReferenceNumber} |
+```
+
+or a dedicated step:
+
+```gherkin
+And one Service record for "SNS-MOVEMENT" has identity pole v2 id "SNSENS:S={movementReferenceNumber}"
+```
+
+Then the step definition or assertion adapter should translate semantic aliases into the current test-common key:
+
+```java
+private static final Map<String, String> EXPECTED_FIELD_ALIASES = Map.of(
+        "identityPoleV2Id", "Data metadata.identityRecord.poleId.v2.id",
+        "metadata.identityRecord.poleId.v2.id", "Data metadata.identityRecord.poleId.v2.id"
+);
+
+private static Map<String, String> normalizeExpectedFields(Map<String, String> fields) {
+    return fields.entrySet().stream()
+            .collect(Collectors.toMap(
+                    entry -> EXPECTED_FIELD_ALIASES.getOrDefault(entry.getKey(), entry.getKey()),
+                    Map.Entry::getValue,
+                    (left, right) -> right,
+                    LinkedHashMap::new
+            ));
+}
+```
+
+The step methods can normalize the map before calling `matchExpectedPoleV2Id`, `checkPoleV2Id`, or the record assertion helpers.
+
+### Why This Helps
+
+- Prevents future dependency/model changes from requiring large mechanical edits across feature files
+- Keeps Cucumber scenarios closer to domain language
+- Makes assertion failures easier to understand
+- Allows backward-compatible support for old feature keys while new semantic aliases are introduced gradually
+- Reduces review noise when only the assertion helper key changes
+
+### Recommended Migration Path
+
+1. Keep the immediate `Data metadata.identityRecord.poleId.v2.id` feature update for compatibility with the current dependency set.
+2. Add a normalization layer in `IntegrationTestSteps` or a small assertion adapter.
+3. Support both legacy keys and the new semantic alias during migration.
+4. Gradually replace raw field paths in feature files with `identityPoleV2Id`.
+5. Once all features use the semantic alias, remove direct dependency on test-common key names from feature files.
+
+This is a maintainability improvement, not a speed-up. Its value is avoiding repeated broad feature-file churn as the underlying model/test-common libraries evolve.
+
+---
+
 ## Combined Impact
 
 These quick wins are cumulative and stack with the parallelization proposals:
@@ -262,13 +366,15 @@ These quick wins are cumulative and stack with the parallelization proposals:
 | 4.3 JaCoCo profile | Removes instrumentation overhead in local runs |
 | 4.4 No `clean` locally | Skips code generation + full recompilation |
 | 4.5 JVM tuning | Faster fork startup, especially with Proposal 2 |
+| 4.6 Feature assertion DSL normalization | No direct speed-up; prevents broad feature churn after dependency/model changes |
 
 ## Recommended Order
 
 1. **4.1 (logging)** first — highest impact, zero code logic change, just a properties file
 2. **4.2 (mapping version from Spring config)** — small code change, removes per-scenario I/O
 3. **4.5 (JVM tuning)** — apply alongside Proposal 2 (forkCount)
-4. **4.3 and 4.4** — developer-experience improvements for local iteration
+4. **4.6 (feature assertion DSL normalization)** — apply after the current compatibility fix, before the next broad model/dependency upgrade
+5. **4.3 and 4.4** — developer-experience improvements for local iteration
 
 ## Risks
 
@@ -277,3 +383,4 @@ These quick wins are cumulative and stack with the parallelization proposals:
 | Losing useful debug logs (4.1) | Medium | Keep step package at INFO, or override via system property when debugging |
 | Stale build artifacts (4.4) | Low | This is local-only; CI always uses `clean` |
 | argLine conflict with JaCoCo (4.5) | Medium | Use the `@{argLine}` placeholder as shown above |
+| Alias normalization hides a typo in a feature key (4.6) | Low | Keep alias list explicit and fail on unknown keys for `with following poleV2Id` steps |
