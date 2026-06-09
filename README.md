@@ -23,7 +23,7 @@ As the mapping coverage grows, more features are added, and this time increases 
 | [02-proposal-maven-parallel-build.md](./02-proposal-maven-parallel-build.md) | Quick win: parallel module builds with Maven `-T` flag |
 | [03-proposal-multiple-runners-fork.md](./03-proposal-multiple-runners-fork.md) | Main proposal: split runners + Surefire forkCount for 2-3x likely improvement |
 | [04-proposal-junit5-parallel-engine.md](./04-proposal-junit5-parallel-engine.md) | Long-term: migrate to JUnit 5 Platform Engine with scenario-level parallelism |
-| [05-proposal-quick-wins.md](./05-proposal-quick-wins.md) | Non-parallel optimizations: test logging, fixture caching, JaCoCo profile, build & JVM tuning |
+| [05-proposal-quick-wins.md](./05-proposal-quick-wins.md) | Non-parallel optimizations: test logging, fixture caching, JaCoCo profile, build/JVM tuning, feature assertion DSL cleanup |
 | [06-proposal-ci-matrix-sharding.md](./06-proposal-ci-matrix-sharding.md) | CI-level alternative: split runner groups into separate parallel Drone steps |
 | [07-proposal-e2e-runtime.md](./07-proposal-e2e-runtime.md) | E2E test harness optimizations excluding Docker/container work |
 
@@ -51,6 +51,7 @@ The proposals fall into three categories: **topology-test parallelization**, **p
 | JaCoCo skip profile (local) | Removes instrumentation overhead locally | Low | 30 min |
 | Avoid `clean` locally | Skips code generation + recompilation | None | 0 |
 | Test JVM tuning | Faster fork startup | Low | 30 min |
+| Feature assertion DSL normalization | No direct speed-up; avoids broad feature churn after model/test-common changes | Low | 1-2 hours |
 
 ### E2E Runtime Optimization
 
@@ -69,6 +70,7 @@ The proposals fall into three categories: **topology-test parallelization**, **p
 6. **Apply remaining Proposal 4 items** (mapping version config, JVM tuning) alongside Proposal 2
 7. **Plan Proposal 3** (JUnit 5 engine) for a future sprint if even more speed is needed
 8. **Apply Proposal 6 quick fixes** for E2E runtime — start with per-feature timing, the RunLog poll unit fix, log reduction, and readiness caching
+9. **Add Proposal 4.6 normalization** after the current feature compatibility fix — keep feature files on stable domain aliases rather than raw test-common field names
 
 ## Expected Impact on Current CI
 
