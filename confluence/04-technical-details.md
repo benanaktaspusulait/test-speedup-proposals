@@ -99,6 +99,8 @@ Guardrails:
 - compare scenario count before/after
 - rebalance groups if one dominates wall time
 
+**Failsafe note:** If integration tests are executed by Failsafe rather than Surefire, apply the same fork-count and argLine guardrails to the `maven-failsafe-plugin` configuration. The pattern is identical; only the plugin artifact ID changes.
+
 ---
 
 ## 4. Hardening Patterns

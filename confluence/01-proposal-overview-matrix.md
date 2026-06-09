@@ -18,7 +18,7 @@ This page gives the decision view: value, risk, complexity, effort, and MoSCoW r
 | Baseline timing/report output | Capture timings, scenario count, feature timing, and reports before changes | High | Low | Low | Low | Must | Needed before any decision |
 | Reduce test logging | Lower noisy green-run logs with debug override | High | Low | Low | Low | Must | Quick win |
 | E2E poll duration fix | Correct milliseconds/seconds polling configuration mistakes that can create avoidable waits | Medium | Low | Low | Low | Must | Avoids accidental long waits |
-| Multiple runners + Surefire forks | Split large Cucumber runner into runner groups and run JVM forks | High | Medium | Medium | Medium | Should | Main near-term speed-up model; confirm as Must after service baseline validates suitability |
+| Multiple runners + Surefire forks | Split large Cucumber runner into runner groups and run JVM forks | High | Medium | Medium | Medium | Should | Main near-term speed-up model; confirm as Must after service baseline validates suitability. High value only where the Cucumber/topology test suite is a meaningful part of pipeline duration. For services where E2E dominates the runtime, E2E harness tuning should be prioritised first. |
 | JVM tuning for forks | Add short-lived JVM flags for forked tests | Medium | Low | Low | Low | Should | Use with forked tests |
 | Config injection/caching | Avoid repeated per-scenario config reads | Medium | Low | Low | Low | Should | Apply only where repeated reads exist |
 | Optional local JaCoCo skip | Allow faster local runs while keeping CI coverage enabled | Low | Low | Low | Low | Should | Local feedback only |
